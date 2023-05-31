@@ -1,55 +1,73 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
+import { Button, View, Text, StyleSheet } from 'react-native';
 
-import { Button, View, Text } from 'react-native'; 
 
- 
 
-class EditItemsScreen extends Component { 
+class EditItemsScreen extends Component {
 
-  static navigationOptions = { 
+  static navigationOptions = {
 
-    title: 'Editar', 
+    title: 'Editar',
 
-  }; 
+  };
 
-  render() { 
+  render() {
 
-    return ( 
+    return (
 
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
+      <View style={styles.container}>
 
-        <Text>Editar</Text> 
+        <Text>Editar</Text>
 
-        <Button 
+        <View style={styles.botao}>
+          <Button
 
-          title="Ir para a edição novamente" 
+            title="Ir para a edição novamente"
+            color="#8C60C6"
+            onPress={() => this.props.navigation.push('EditScreen')}
 
-          onPress={() => this.props.navigation.push('EditScreen')} 
+          />
 
-        /> 
+          <Button
 
-        <Button 
+            title="Ir para listar"
+            color="#8C60C6"
+            onPress={() => this.props.navigation.navigate('ListScreen')}
 
-          title="Ir para listar" 
+          />
 
-          onPress={() => this.props.navigation.navigate('ListScreen')} 
+          <Button
 
-        /> 
+            title="Voltar"
+            color="#8C60C6"
+            onPress={() => this.props.navigation.goBack()}
 
-        <Button 
+          />
 
-          title="Voltar" 
+        </View>
 
-          onPress={() => this.props.navigation.goBack()} 
 
-        /> 
+      </View>
 
-      </View> 
+    );
 
-    ); 
+  }
 
-  } 
+}
+const styles = StyleSheet.create({
 
-} 
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
 
+
+  },
+  botao: {
+    width: 'auto',
+
+
+  }
+});
 export default EditItemsScreen; 

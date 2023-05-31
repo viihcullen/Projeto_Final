@@ -1,6 +1,5 @@
 import React, { Component } from 'react'; 
-
-import { Button, View, Text } from 'react-native'; 
+import { Button, View, Text, StyleSheet  } from 'react-native'; 
 
  
  
@@ -17,12 +16,11 @@ class AddItemsScreen extends Component {
 
     return ( 
 
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
+      <View style={styles.container}> 
 
-        <Text>Adicionar</Text> 
-
-        <Button 
-
+      <View style={styles.botao}>
+      <Button 
+          color="#8C60C6"
           title="Mostrar adicionar novamente" 
 
           onPress={() => this.props.navigation.push('AddBoard')} 
@@ -30,7 +28,7 @@ class AddItemsScreen extends Component {
         /> 
 
         <Button 
-
+          color="#8C60C6"
           title="Ir para listar" 
 
           onPress={() => this.props.navigation.navigate('ListScreen')} 
@@ -38,12 +36,17 @@ class AddItemsScreen extends Component {
         /> 
 
         <Button 
-
+          color="#8C60C6"
           title="Voltar" 
 
           onPress={() => this.props.navigation.goBack()} 
 
         /> 
+      </View>
+
+        
+
+        
 
       </View> 
 
@@ -52,5 +55,20 @@ class AddItemsScreen extends Component {
   } 
 
 } 
+const styles = StyleSheet.create({ 
 
+  container:{ 
+    flex:1, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+
+
+  }, 
+  botao:{
+    width: 'auto',
+    
+
+  }
+}); 
 export default AddItemsScreen; 
