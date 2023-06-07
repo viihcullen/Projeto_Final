@@ -2,7 +2,6 @@ import React from 'react';
 import ListScreen from './src/components/ListScreen';
 import DetailScreen from './src/components/DetailScreen';
 import AddItemsScreen from './src/components/AddItemsScreen';
-import EditItemsScreen from './src/components/EditItemsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
@@ -60,7 +59,6 @@ const App = () => {
 
         <Stack.Screen options={{ headerTitle: 'Adicionar Integrantes' }} name="AddItemsScreen" component={AddItemsScreen} />
 
-        <Stack.Screen options={{ headerTitle: 'Editar Integrantes' }} name="EditItemsScreen" component={EditItemsScreen} />
 
       </Stack.Navigator>
 

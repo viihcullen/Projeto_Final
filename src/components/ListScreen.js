@@ -1,74 +1,91 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, View, Text,Button } from 'react-native';
-import { List, ListItem, Icon } from 'react-native-elements';
+import { Text } from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, View } from 'react-native';
+import { ListItem } from '@react-native-material/core'
+import firebase from '../services/connectionFirebase';
 
 
 
 class ListScreen extends Component {
 
-  static navigationOptions = {
-
-    title: 'Listar',
-
-  };
+  constructor() {
+    super();
+    this.firestoreRef = firebase.firestore().collection('users');
+    this.state = {
+      isLoading: true,
+      userArr: []
+    };
+  }
+  componentDidMount() {
+    this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+  getCollection = (querySnapshot) => {
+    const userArr = [];
+    querySnapshot.forEach((res) => {
+      const { name, tutor, email, descricao } = res.data();
+      userArr.push({
+        key: res.id,
+        res,
+        name,
+        tutor,
+        email,
+        descricao,
+      });
+    });
+    this.setState({
+      userArr,
+      isLoading: false,
+    });
+  }
 
   render() {
 
-    return (
-
-      <View style={styles.container}>
-
-        <Text>Listar</Text>
-
-        <View style={styles.botao}>
-          <Button
-
-            title="Detalhes"
-            color="#8C60C6"
-            onPress={() => this.props.navigation.navigate('DetailScreen')}
-
-          />
-
-          <Button
-
-            title="Adicionar"
-            color="#8C60C6"
-            onPress={() => this.props.navigation.navigate('AddItemsScreen')}
-
-          />
-
-          <Button
-
-            title="Editar"
-            color="#8C60C6"
-            onPress={() => this.props.navigation.navigate('EditItemsScreen')}
-
-          />
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E" />
         </View>
+      )
+    } else {
+      return (
+        <ScrollView style={styles.container}>
+          {
+            this.state.userArr.map((item, i) => {
+              return (
+                <ListItem
+                  key={i}
+                  title={item.name}
+                  secondaryText={item.tutor}
+                  onPress={() => {
+                    this.props.navigation.navigate('DetailScreen', {
+                      userkey: item.key
+                    });
+                  }} />
+              );
+            })
 
-
-      </View>
-
-    );
-
+          }
+        </ScrollView>
+      );
+    }
   }
-
 }
-
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    paddingBottom: 22,
   },
-  botao:{
-    width: 'auto',
-  
+  preloader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
-
-
-
 });
 export default ListScreen; 
